@@ -15,6 +15,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'phpactor/phpactor'
 Plugin 'w0rp/ale'
+Plugin 'jiangmiao/auto-pairs'
 call vundle#end()
 
 filetype plugin indent on
@@ -61,12 +62,6 @@ map <C-p> :FZF<CR>
 
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
-
-inoremap ( ()<Esc>i
-inoremap { {}<Esc>i
-inoremap [ []<Esc>i
-inoremap ' ''<Esc>i
-inoremap " ""<Esc>i
 
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
