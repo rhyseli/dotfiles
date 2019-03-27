@@ -1,6 +1,7 @@
 set nocompatible
 filetype off
 
+" Plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
@@ -23,6 +24,7 @@ let mapleader = ","
 
 colorscheme gruvbox
 
+" Variables
 set background=dark
 set encoding=utf-8
 set guifont=FiraCode-Regular:h14
@@ -53,6 +55,7 @@ set noshowmode
 set termguicolors
 set guioptions=
 
+" Keymaps
 map <C-n> :NERDTreeToggle<CR>
 map <C-p> :FZF<CR>
 
@@ -65,11 +68,32 @@ inoremap [ []<Esc>i
 inoremap ' ''<Esc>i
 inoremap " ""<Esc>i
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-
-autocmd FileType php setlocal omnifunc=phpactor#Complete
-
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
+        
+nnoremap <A-j> :m .+1<CR>==
+nnoremap <A-k> :m .-2<CR>==
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+vnoremap <A-j> :m '>+1<CR>gv=gv
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" Weird macOS maps to move lines
+nnoremap ∆ :m .+1<CR>==
+nnoremap ˚ :m .-2<CR>==
+inoremap ∆ <Esc>:m .+1<CR>==gi
+inoremap ˚ <Esc>:m .-2<CR>==gi
+vnoremap ∆ :m '>+1<CR>gv=gv
+vnoremap ˚ :m '<-2<CR>gv=gv
+
+" Plugin stuff
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline_powerline_fonts = 1
+
+let g:ale_linters = {
+\   'php': ['php'],
+\}
+
+autocmd FileType php setlocal omnifunc=phpactor#Complete
