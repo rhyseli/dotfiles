@@ -16,6 +16,7 @@ Plugin 'StanAngeloff/php.vim'
 Plugin 'phpactor/phpactor'
 Plugin 'w0rp/ale'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'pangloss/vim-javascript'
 call vundle#end()
 
 filetype plugin indent on
@@ -55,6 +56,7 @@ set autoread
 set noshowmode
 set termguicolors
 set guioptions=
+set mouse=a
 
 " Keymaps
 map <C-n> :NERDTreeToggle<CR>
@@ -66,7 +68,7 @@ nnoremap <S-Tab> :bprevious<CR>
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
-        
+
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
 inoremap <A-j> <Esc>:m .+1<CR>==gi
@@ -86,9 +88,8 @@ vnoremap ˚ :m '<-2<CR>gv=gv
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline_powerline_fonts = 1
-
 let g:ale_linters = {
-\   'php': ['php'],
-\}
+            \   'php': ['php'],
+            \}
 
 autocmd FileType php setlocal omnifunc=phpactor#Complete
