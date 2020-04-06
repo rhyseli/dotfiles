@@ -65,3 +65,4 @@ map <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR
 
 " Plugin configs
 let g:airline#extensions#tabline#enabled = 1
+let NERDTreeShowLineNumbers = 0
