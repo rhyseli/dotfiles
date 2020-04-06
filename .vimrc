@@ -1,95 +1,67 @@
 set nocompatible
-filetype off
-
-" Plugins
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'morhetz/gruvbox'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'StanAngeloff/php.vim'
-Plugin 'phpactor/phpactor'
-Plugin 'w0rp/ale'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'pangloss/vim-javascript'
-call vundle#end()
-
-filetype plugin indent on
 syntax on
+filetype plugin indent on
+
+" Install vim plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+    Plug 'preservim/nerdtree'
+    Plug 'preservim/nerdcommenter'
+    Plug 'dense-analysis/ale'
+    Plug 'ycm-core/YouCompleteMe'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'altercation/vim-colors-solarized'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'ludovicchabant/vim-gutentags'
+call plug#end()
 
 let mapleader = ","
 
-colorscheme gruvbox
-
-" Variables
-set background=dark
-set encoding=utf-8
-set guifont=FiraCode-Regular:h14
-set number
+colo solarized
+set guifont=JetBrainsMono-Regular:h14
+set number relativenumber
+set ruler
+set visualbell
+set wrap
+set showmatch
+set hlsearch
+set smartcase
+set ignorecase
+set incsearch
 set autoindent
+set expandtab
+set shiftwidth=4
 set smartindent
 set smarttab
-set shiftwidth=4
 set softtabstop=4
-set tabstop=4
-set expandtab
-set incsearch
-set hlsearch
-set ignorecase
-set smartcase
-set noswapfile
-set nobackup
-set nowb
-set hidden
-set backspace=indent,eol,start
-set history=1000
-set showcmd
-set showmode
-set gcr=a:blinkon0
-set visualbell
-set autoread
 set noshowmode
-set termguicolors
 set guioptions=
-set mouse=a
 
-" Keymaps
+" Plugin maps
 map <C-n> :NERDTreeToggle<CR>
-map <C-p> :FZF<CR>
+map <C-p> :Files<CR>
 
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
+" Default maps
+nmap <Tab> :bn<CR>
+nmap <leader>x :bd<CR>
+nmap <leader>f :Ag<CR>
 
-nmap <leader><tab> <plug>(fzf-maps-n)
-xmap <leader><tab> <plug>(fzf-maps-x)
-omap <leader><tab> <plug>(fzf-maps-o)
+" Background switcher
+map <leader>bg :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
-nnoremap <A-j> :m .+1<CR>==
-nnoremap <A-k> :m .-2<CR>==
-inoremap <A-j> <Esc>:m .+1<CR>==gi
-inoremap <A-k> <Esc>:m .-2<CR>==gi
-vnoremap <A-j> :m '>+1<CR>gv=gv
-vnoremap <A-k> :m '<-2<CR>gv=gv
+" Only show relative numbers in normal mode on current buffer
+:augroup numbertoggle
+:  autocmd!
+:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+:augroup END
 
-" Weird macOS maps to move lines
-nnoremap ∆ :m .+1<CR>==
-nnoremap ˚ :m .-2<CR>==
-inoremap ∆ <Esc>:m .+1<CR>==gi
-inoremap ˚ <Esc>:m .-2<CR>==gi
-vnoremap ∆ :m '>+1<CR>gv=gv
-vnoremap ˚ :m '<-2<CR>gv=gv
-
-" Plugin stuff
+" Plugin configs
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_powerline_fonts = 1
-let g:ale_linters = {
-            \   'php': ['php'],
-            \}
-
-autocmd FileType php setlocal omnifunc=phpactor#Complete
